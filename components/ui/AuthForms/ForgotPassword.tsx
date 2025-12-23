@@ -7,7 +7,6 @@ import { handleRequest } from '@/utils/auth-helpers/client';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-// Define prop type with allowEmail boolean
 interface ForgotPasswordProps {
   allowEmail: boolean;
   redirectMethod: string;
@@ -23,60 +22,91 @@ export default function ForgotPassword({
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    setIsSubmitting(true); // Disable the button while the request is being handled
+    setIsSubmitting(true);
     await handleRequest(e, requestPasswordUpdate, router);
     setIsSubmitting(false);
   };
 
   return (
-    <div className="my-8">
-      <form
-        noValidate={true}
-        className="mb-4"
-        onSubmit={(e) => handleSubmit(e)}
-      >
-        <div className="grid gap-2">
-          <div className="grid gap-1">
-            <label htmlFor="email">Email</label>
+    <div className="flex justify-center mt-10 animate-fadeIn">
+      <div className="w-full max-w-md rounded-2xl bg-zinc-900 p-8 shadow-lg border border-zinc-800">
+
+        <h2 className="text-2xl font-semibold text-white text-center mb-2">
+          Forgot Password?
+        </h2>
+        <p className="text-sm text-zinc-400 text-center mb-6">
+          Enter your email and we’ll send you a reset link
+        </p>
+
+        <form
+          noValidate
+          onSubmit={handleSubmit}
+          className="space-y-4"
+        >
+          <div>
+            <label className="text-sm text-zinc-300">
+              Email address
+            </label>
             <input
               id="email"
-              placeholder="name@example.com"
-              type="email"
               name="email"
+              type="email"
+              placeholder="name@example.com"
               autoCapitalize="none"
               autoComplete="email"
               autoCorrect="off"
-              className="w-full p-3 rounded-md bg-zinc-800"
+              className="
+                mt-1 w-full rounded-xl px-4 py-3
+                bg-zinc-800 text-white
+                border border-zinc-700
+                focus:outline-none
+                focus:ring-2 focus:ring-indigo-500
+                transition-all duration-300
+              "
             />
           </div>
+
           <Button
             variant="slim"
             type="submit"
-            className="mt-1"
             loading={isSubmitting}
             disabled={disableButton}
+            className="
+              w-full rounded-xl py-3
+              bg-indigo-600 hover:bg-indigo-500
+              transition-all duration-300
+            "
           >
-            Send Email
+            Send Reset Link
           </Button>
-        </div>
-      </form>
-      <p>
-        <Link href="/signin/password_signin" className="font-light text-sm">
-          Sign in with email and password
-        </Link>
-      </p>
-      {allowEmail && (
-        <p>
-          <Link href="/signin/email_signin" className="font-light text-sm">
-            Sign in via magic link
+        </form>
+
+        <div className="mt-6 space-y-2 text-center">
+          <Link
+            href="/signin/password_signin"
+            className="block text-sm text-indigo-400 hover:text-indigo-300 transition"
+          >
+            Sign in with password
           </Link>
-        </p>
-      )}
-      <p>
-        <Link href="/signin/signup" className="font-light text-sm">
-          Don't have an account? Sign up
-        </Link>
-      </p>
+
+          {allowEmail && (
+            <Link
+              href="/signin/email_signin"
+              className="block text-sm text-indigo-400 hover:text-indigo-300 transition"
+            >
+              Sign in via magic link
+            </Link>
+          )}
+
+          <Link
+            href="/signin/signup"
+            className="block text-sm text-zinc-400 hover:text-zinc-200 transition"
+          >
+            Don’t have an account?{" "}
+            <span className="text-indigo-400">Sign up</span>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }

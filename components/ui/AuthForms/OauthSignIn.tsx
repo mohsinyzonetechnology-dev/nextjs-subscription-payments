@@ -19,7 +19,7 @@ export default function OauthSignIn() {
       displayName: 'GitHub',
       icon: <Github className="h-5 w-5" />
     }
-    /* Add desired OAuth providers here */
+    /* Add more providers here if needed */
   ];
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -30,7 +30,7 @@ export default function OauthSignIn() {
   };
 
   return (
-    <div className="mt-8">
+    <div className="mt-8 space-y-4">
       {oAuthProviders.map((provider) => (
         <form
           key={provider.name}
@@ -41,11 +41,28 @@ export default function OauthSignIn() {
           <Button
             variant="slim"
             type="submit"
-            className="w-full"
+            className="
+              w-full flex items-center justify-center gap-2
+              rounded-xl bg-gray-900 hover:bg-gray-800
+              text-white font-semibold
+              border border-gray-700
+              shadow-lg hover:shadow-cyan-400/50
+              transition-all duration-300
+              relative overflow-hidden
+            "
             loading={isSubmitting}
           >
-            <span className="mr-2">{provider.icon}</span>
-            <span>{provider.displayName}</span>
+            {/* Hover Glow */}
+            <span className="
+              absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-400/20 to-purple-400/20
+              opacity-0 transition-opacity duration-300
+              group-hover:opacity-100
+            " />
+
+            <span className="relative flex items-center gap-2">
+              <span className="text-xl">{provider.icon}</span>
+              {provider.displayName}
+            </span>
           </Button>
         </form>
       ))}
