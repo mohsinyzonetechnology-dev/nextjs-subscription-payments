@@ -25,8 +25,6 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
-.env
-.env.local
 .env.development.local
 .env.test.local
 .env.production.local
@@ -35,8 +33,10 @@ yarn-error.log*
 .vercel
 
 # editors
-.vscode
 
 # certificates
 certificates
 .env*.local
+temp_auto_push.bat
+temp_interactive_push.bat
+config.bat

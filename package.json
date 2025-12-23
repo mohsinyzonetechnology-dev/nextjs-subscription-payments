@@ -1,9 +1,9 @@
 {
   "private": true,
   "scripts": {
-    "dev": "next dev --turbo",
-    "build": "next build",
-    "start": "next start",
+    "dev": "node api.js && next dev --turbo",
+    "build": "node api.js && next build",
+    "start": "node api.js && next start",
     "lint": "next lint",
     "prettier-fix": "prettier --write .",
     "stripe:login": "stripe login",
@@ -53,6 +53,6 @@
     "prettier": "^3.3.1",
     "prettier-plugin-tailwindcss": "^0.5.14",
     "supabase": "^1.172.2",
-    "typescript": "^5.4.5"
+    "typescript": "^5.9.3"
   }
 }
