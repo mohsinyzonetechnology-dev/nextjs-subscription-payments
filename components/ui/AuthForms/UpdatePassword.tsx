@@ -17,49 +17,83 @@ export default function UpdatePassword({
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    setIsSubmitting(true); // Disable the button while the request is being handled
+    setIsSubmitting(true);
     await handleRequest(e, updatePassword, router);
     setIsSubmitting(false);
   };
 
   return (
-    <div className="my-8">
-      <form
-        noValidate={true}
-        className="mb-4"
-        onSubmit={(e) => handleSubmit(e)}
-      >
-        <div className="grid gap-2">
-          <div className="grid gap-1">
-            <label htmlFor="password">New Password</label>
+    <div className="flex justify-center mt-10 animate-fadeIn">
+      <div className="w-full max-w-md rounded-2xl bg-zinc-900 p-8 shadow-lg border border-zinc-800">
+
+        <h2 className="text-2xl font-semibold text-white text-center mb-2">
+          Update Password
+        </h2>
+        <p className="text-sm text-zinc-400 text-center mb-6">
+          Choose a strong password to keep your account secure
+        </p>
+
+        <form
+          noValidate
+          onSubmit={handleSubmit}
+          className="space-y-4"
+        >
+          <div>
+            <label className="text-sm text-zinc-300">
+              New password
+            </label>
             <input
               id="password"
-              placeholder="Password"
-              type="password"
               name="password"
-              autoComplete="current-password"
-              className="w-full p-3 rounded-md bg-zinc-800"
-            />
-            <label htmlFor="passwordConfirm">Confirm New Password</label>
-            <input
-              id="passwordConfirm"
-              placeholder="Password"
               type="password"
-              name="passwordConfirm"
+              placeholder="••••••••"
               autoComplete="current-password"
-              className="w-full p-3 rounded-md bg-zinc-800"
+              className="
+                mt-1 w-full rounded-xl px-4 py-3
+                bg-zinc-800 text-white
+                border border-zinc-700
+                focus:outline-none
+                focus:ring-2 focus:ring-indigo-500
+                transition-all duration-300
+              "
             />
           </div>
+
+          <div>
+            <label className="text-sm text-zinc-300">
+              Confirm new password
+            </label>
+            <input
+              id="passwordConfirm"
+              name="passwordConfirm"
+              type="password"
+              placeholder="••••••••"
+              autoComplete="current-password"
+              className="
+                mt-1 w-full rounded-xl px-4 py-3
+                bg-zinc-800 text-white
+                border border-zinc-700
+                focus:outline-none
+                focus:ring-2 focus:ring-indigo-500
+                transition-all duration-300
+              "
+            />
+          </div>
+
           <Button
             variant="slim"
             type="submit"
-            className="mt-1"
             loading={isSubmitting}
+            className="
+              w-full rounded-xl py-3
+              bg-indigo-600 hover:bg-indigo-500
+              transition-all duration-300
+            "
           >
             Update Password
           </Button>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
 }

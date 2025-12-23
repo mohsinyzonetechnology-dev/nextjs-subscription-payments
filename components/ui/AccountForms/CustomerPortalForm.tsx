@@ -33,15 +33,20 @@ export default function CustomerPortalForm({ subscription }: Props) {
     subscription &&
     new Intl.NumberFormat('en-US', {
       style: 'currency',
-      currency: subscription?.prices?.currency!,
+      currency: subscription?.prices?.currency || 'USD',
       minimumFractionDigits: 0
     }).format((subscription?.prices?.unit_amount || 0) / 100);
 
   const handleStripePortalRequest = async () => {
     setIsSubmitting(true);
-    const redirectUrl = await createStripePortal(currentPath);
-    setIsSubmitting(false);
-    return router.push(redirectUrl);
+    try {
+      const redirectUrl = await createStripePortal(currentPath);
+      router.push(redirectUrl);
+    } catch (error) {
+      console.error('Failed to open Stripe portal:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -53,23 +58,30 @@ export default function CustomerPortalForm({ subscription }: Props) {
           : 'You are not currently subscribed to any plan.'
       }
       footer={
-        <div className="flex flex-col items-start justify-between sm:flex-row sm:items-center">
-          <p className="pb-4 sm:pb-0">Manage your subscription on Stripe.</p>
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+          <p className="text-gray-400 sm:pb-0">
+            Manage your subscription securely via Stripe.
+          </p>
           <Button
             variant="slim"
             onClick={handleStripePortalRequest}
             loading={isSubmitting}
           >
-            Open customer portal
+            Open Customer Portal
           </Button>
         </div>
       }
     >
-      <div className="mt-8 mb-4 text-xl font-semibold">
+      <div className="mt-6 mb-4 text-2xl font-bold text-indigo-500">
         {subscription ? (
           `${subscriptionPrice}/${subscription?.prices?.interval}`
         ) : (
-          <Link href="/">Choose your plan</Link>
+          <Link
+            href="/"
+            className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors"
+          >
+            Choose your plan
+          </Link>
         )}
       </div>
     </Card>
